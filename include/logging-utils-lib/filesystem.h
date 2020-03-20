@@ -33,11 +33,28 @@ inline std::vector<std::string> split(const std::string& s, const char* delimete
    return tokens;
 }
 
+template <typename Iter>
+inline std::string join(Iter begin, Iter end, std::string const& separator)
+{
+  std::ostringstream result;
+  if (begin != end)
+    result << *begin++;
+  while (begin != end)
+    result << separator << *begin++;
+  return result.str();
+}
+
 inline std::string baseName(const std::string& path)
 {
   std::string filename = split(path, "/").back();
   return split(filename, ".")[0];
 }
 
+inline std::string dirName(const std::string& path)
+{
+    std::vector<std::string> split_path = split(path, "/");
+    split_path.pop_back();
+    return join(split_path.begin(), split_path.end(), "/");
+}
 
 } // end namespace filesys
