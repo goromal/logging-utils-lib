@@ -77,5 +77,38 @@ inline void logToMatrix(const std::string &filename, MatrixXd &matrix, int rowSi
   }
 }
 
+class Logger
+{
+public:
+    Logger() {}
+
+    Logger(const std::string filename)
+    {
+        open(filename);
+    }
+
+    void open(const std::string& filename)
+    {
+        file_.open(filename);
+    }
+
+    ~Logger()
+    {
+        file_.close();
+    }
+    template <typename... T>
+    void log(T... data)
+    {
+        int dummy[sizeof...(data)] = { (file_.write((char*)&data, sizeof(T)), 1)... };
+    }
+
+    template <typename... T>
+    void logVectors(T... data)
+    {
+        int dummy[sizeof...(data)] = { (file_.write((char*)data.data(), sizeof(typename T::Scalar)*data.rows()*data.cols()), 1)... };
+    }
+
+    std::ofstream file_;
+};
 
 } // end namespace logging
