@@ -89,6 +89,8 @@ public:
 
     void open(const std::string& filename)
     {
+        if (file_.is_open())
+            file_.close();
         file_.open(filename);
     }
 

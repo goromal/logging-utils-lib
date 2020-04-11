@@ -16,9 +16,9 @@ inline bool file_exists (const std::string& name) {
 inline bool createDirIfNotExist(const std::string& dir)
 {
   if(!std::experimental::filesystem::exists(dir))
-    return std::experimental::filesystem::create_directory(dir);
+      return std::experimental::filesystem::create_directory(dir);
   else
-    return false;
+      return false;
 }
 
 inline std::vector<std::string> split(const std::string& s, const char* delimeter)
